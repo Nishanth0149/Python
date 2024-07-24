@@ -1,0 +1,26 @@
+from collections import defaultdict
+
+def top_k_frequent_elements(nums, k):
+    # Step 1: Count frequencies
+    count = defaultdict(int)
+    for num in nums:
+        count[num] += 1
+    
+    # Step 2: Bucket sort based on frequency
+    frequency = [[] for _ in range(len(nums) + 1)]
+    for num, c in count.items():
+        frequency[c].append(num)
+    
+    # Step 3: Collect top k elements
+    result = []
+    for i in range(len(frequency) - 1, 0, -1):
+        for n in frequency[i]:
+            result.append(n)
+            if len(result) == k:
+                return result
+
+# Example usage
+nums = [1, 1, 1, 2, 2, 3]
+k = 2
+print(top_k_frequent_elements(nums, k))  # Output: [1, 2]
+
